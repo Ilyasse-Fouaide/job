@@ -3,6 +3,7 @@ const config = require("./config/config");
 const authRouter = require("./routes/auth.router");
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
+const connect = require("./db/connect");
 
 const app = express();
 
@@ -15,4 +16,14 @@ app.use(notFound);
 app.use(errorHandler);
 
 const port = config.PORT || 5001;
-app.listen(port, () => console.log(`listening the port ${port}...`));
+
+const start = async () => {
+  try {
+    await connect();
+    app.listen(port, () => console.log(`listening the port ${port}...`));
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+start()
