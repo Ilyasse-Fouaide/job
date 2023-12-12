@@ -17,8 +17,7 @@ module.exports.register = tryCatchWrapper(async (req, res, next) => {
   const user = await User.create({ username, email, password: hashedPassword });
 
   res.status(StatusCodes.CREATED).json({
-    success: true,
-    user
+    success: true
   });
 });
 
