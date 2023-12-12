@@ -11,6 +11,11 @@ const internalServerError = (message) => {
   return new CustomError(message, StatusCodes.INTERNAL_SERVER_ERROR);
 }
 
+const notFoundError = (message) => {
+  return new CustomError(message, StatusCodes.NOT_FOUND);
+}
+
 module.exports = {
-  internalServerError
+  internalServerError,
+  notFoundError
 }
