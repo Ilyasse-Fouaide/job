@@ -14,7 +14,7 @@ module.exports.register = tryCatchWrapper(async (req, res, next) => {
 
   const user = await User.create({ username, email, password });
 
-  const token = jwt.sign({ id: user._id, username }, config.JWT_SECRET, { expiresIn: "15d" });
+  const token = jwt.sign({ userId: user._id, username }, config.JWT_SECRET, { expiresIn: "15d" });
 
   res.status(StatusCodes.CREATED).json({
     success: true,
