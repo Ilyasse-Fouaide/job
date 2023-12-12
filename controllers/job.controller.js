@@ -8,6 +8,10 @@ module.exports.show = tryCatchWrapper(async (req, res, next) => {
   res.status(200).json({ message: "show" });
 });
 
+module.exports.store = tryCatchWrapper(async (req, res, next) => {
+  res.status(200).json({ message: "store" });
+});
+
 module.exports.update = tryCatchWrapper(async (req, res, next) => {
   res.status(200).json({ message: "update" });
 });
