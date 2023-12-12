@@ -1,9 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
-const jwt = require("jsonwebtoken");
 const tryCatchWrapper = require("../middlewares/tryCatchWrapper");
 const { badRequestError } = require("../customError/customError");
 const User = require("../models/user.model");
-const config = require("../config/config");
 
 module.exports.register = tryCatchWrapper(async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -14,11 +12,9 @@ module.exports.register = tryCatchWrapper(async (req, res, next) => {
 
   const user = await User.create({ username, email, password });
 
-  const token = jwt.sign({ userId: user._id, username }, config.JWT_SECRET, { expiresIn: "15d" });
-
   res.status(StatusCodes.CREATED).json({
     success: true,
-    token: token
+    token: user.generateToken()
   });
 });
 
