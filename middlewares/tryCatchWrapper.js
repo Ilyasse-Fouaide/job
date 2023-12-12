@@ -7,3 +7,5 @@ const tryCatchWrapper = (cb) => {
     }
   }
 }
+
+module.exports = tryCatchWrapper;
