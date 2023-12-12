@@ -8,7 +8,7 @@ class CustomError extends Error {
 }
 
 const internalServerError = (message) => {
-  return new CustomError("Something broke!.", StatusCodes.INTERNAL_SERVER_ERROR);
+  return new CustomError(message, StatusCodes.INTERNAL_SERVER_ERROR);
 }
 
 module.exports = {
