@@ -63,5 +63,13 @@ module.exports.update = tryCatchWrapper(async (req, res, next) => {
 });
 
 module.exports.destroy = tryCatchWrapper(async (req, res, next) => {
-  res.status(200).json({ message: "destroy" });
+  const { id: jobId } = req.params;
+
+  const job = await Job.findOneAndDelete({ _id: jobId, user: req.user.userId });
+
+  if (!job) {
+    return next(notFoundError("Job not found!."))
+  }
+
+  res.status(StatusCodes.OK).json({ message: "destroy" });
 });
