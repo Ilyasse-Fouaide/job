@@ -44,6 +44,10 @@ module.exports.login = tryCatchWrapper(async (req, res, next) => {
 
 module.exports.profile = tryCatchWrapper(async (req, res, next) => {
   res.status(StatusCodes.OK).json({
-    success: true
+    success: true,
+    user: {
+      userId: req.userId,
+      username: req.username,
+    }
   })
 })
