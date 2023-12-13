@@ -12,7 +12,6 @@ module.exports = (err, req, res, next) => {
   }
 
   if (err.name && err.name == "ValidationError") {
-    console.log(Object.values(err.errors))
     return res.status(400).json({
       success: false,
       error: {
@@ -24,19 +23,23 @@ module.exports = (err, req, res, next) => {
     })
   }
 
-  res.status(
-    500
-  ).json({
-    err
-  })
+  if (err.name && err.name === "CastError") {
+    return res.status(400).json({
+      success: false,
+      error: {
+        status: 400,
+        message: `Cast error for ObjectId ${err.value}`
+      }
+    })
+  }
 
-  // res.status(
-  //   err.status || StatusCodes.INTERNAL_SERVER_ERROR
-  // ).json({
-  //   success: false,
-  //   error: {
-  //     status: err.status || StatusCodes.INTERNAL_SERVER_ERROR,
-  //     message: err.message || ReasonPhrases.INTERNAL_SERVER_ERROR
-  //   }
-  // })
+  res.status(
+    err.status || StatusCodes.INTERNAL_SERVER_ERROR
+  ).json({
+    success: false,
+    error: {
+      status: err.status || StatusCodes.INTERNAL_SERVER_ERROR,
+      message: err.message || ReasonPhrases.INTERNAL_SERVER_ERROR
+    }
+  })
 }
