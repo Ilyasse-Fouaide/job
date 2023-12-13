@@ -13,6 +13,10 @@ const jobSchema = new mongoose.Schema({
     type: String,
     enum: ['interview', 'declined', 'pending'],
     default: 'pending'
+  },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "users"
   }
 });
 
