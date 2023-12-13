@@ -41,3 +41,9 @@ module.exports.login = tryCatchWrapper(async (req, res, next) => {
     token: user.generateToken()
   });
 });
+
+module.exports.profile = tryCatchWrapper(async (req, res, next) => {
+  res.status(StatusCodes.OK).json({
+    success: true
+  })
+})
