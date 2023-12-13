@@ -10,7 +10,7 @@ module.exports.register = tryCatchWrapper(async (req, res, next) => {
     return next(badRequestError("username or email or password not provided!."))
   }
 
-  const user = await User.create({ username, email, password });
+  await User.create({ username, email, password });
 
   res.status(StatusCodes.CREATED).json({
     success: true
