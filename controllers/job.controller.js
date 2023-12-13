@@ -53,6 +53,10 @@ module.exports.update = tryCatchWrapper(async (req, res, next) => {
     { new: true }
   )
 
+  if (!newJob) {
+    return next(notFoundError("Job not found!."))
+  }
+
   res.status(StatusCodes.OK).json({ newJob });
 });
 
