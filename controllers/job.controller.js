@@ -11,6 +11,7 @@ module.exports.index = tryCatchWrapper(async (req, res, next) => {
 
   res.status(StatusCodes.OK).json({
     success: true,
+    count: jobs.length,
     jobs
   });
 });
@@ -22,7 +23,7 @@ module.exports.show = tryCatchWrapper(async (req, res, next) => {
   const job = await Job.findOne({ _id: jobId, user: userId });
 
   if (!job) {
-    return next(notFoundError("Job not found"))
+    return next(notFoundError("Job not found!."))
   }
 
   res.status(StatusCodes.OK).json({
