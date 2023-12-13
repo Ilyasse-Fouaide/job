@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const Job = require("../models/job.model");
 const tryCatchWrapper = require("../middlewares/tryCatchWrapper");
+const { notFoundError } = require("../customError/customError");
 
 module.exports.index = tryCatchWrapper(async (req, res, next) => {
   const jobs = await Job
@@ -19,6 +20,10 @@ module.exports.show = tryCatchWrapper(async (req, res, next) => {
   const userId = req.user.userId;
 
   const job = await Job.findOne({ _id: jobId, user: userId });
+
+  if (!job) {
+    return next(notFoundError("Job not found"))
+  }
 
   res.status(StatusCodes.OK).json({
     success: true,
