@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
+const bcrypt = require("bcryptjs");
 const tryCatchWrapper = require("../middlewares/tryCatchWrapper");
-const { badRequestError } = require("../customError/customError");
+const { badRequestError, notFoundError } = require("../customError/customError");
 const User = require("../models/user.model");
 
 module.exports.register = tryCatchWrapper(async (req, res, next) => {
@@ -24,5 +25,21 @@ module.exports.login = tryCatchWrapper(async (req, res, next) => {
     return next(badRequestError("email or password not provided!."))
   }
 
-  res.status(StatusCodes.CREATED).json({ message: "to login endpoint" });
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return next(notFoundError("Invalid Credentials."))
+  }
+
+  const comparePass = await bcrypt.compare(password, user.password);
+
+  if (!comparePass) {
+    return next(notFoundError("Password Incorrect!."));
+  }
+
+  res.status(StatusCodes.CREATED).json({
+    success: true,
+    user
+    // token: user.generateToken()
+  });
 });
