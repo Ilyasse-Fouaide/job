@@ -33,6 +33,10 @@ userSchema.methods.generateToken = function () {
   return jwt.sign({ userId: this._id, username: this.username }, config.JWT_SECRET, { expiresIn: config.JWT_LIFETIME })
 }
 
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password)
+}
+
 const User = mongoose.model("users", userSchema);
 module.exports = User
 

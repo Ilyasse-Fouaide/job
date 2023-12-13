@@ -1,5 +1,4 @@
 const { StatusCodes } = require("http-status-codes");
-const bcrypt = require("bcryptjs");
 const tryCatchWrapper = require("../middlewares/tryCatchWrapper");
 const { badRequestError, notFoundError } = require("../customError/customError");
 const User = require("../models/user.model");
@@ -31,7 +30,7 @@ module.exports.login = tryCatchWrapper(async (req, res, next) => {
     return next(notFoundError("Invalid Credentials."))
   }
 
-  const comparePass = await bcrypt.compare(password, user.password);
+  const comparePass = await user.comparePassword(password);
 
   if (!comparePass) {
     return next(notFoundError("Password Incorrect!."));
