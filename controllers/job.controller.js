@@ -1,9 +1,17 @@
+const { StatusCodes } = require("http-status-codes");
 const Job = require("../models/job.model");
 const tryCatchWrapper = require("../middlewares/tryCatchWrapper");
-const { StatusCodes } = require("http-status-codes");
 
 module.exports.index = tryCatchWrapper(async (req, res, next) => {
-  res.status(200).json({ message: "index" });
+  const jobs = await Job
+    .find({ user: req.user.userId })
+    .sort("createdAt")
+    .select("-__v")
+
+  res.status(200).json({
+    success: true,
+    jobs
+  });
 });
 
 module.exports.show = tryCatchWrapper(async (req, res, next) => {
@@ -11,16 +19,13 @@ module.exports.show = tryCatchWrapper(async (req, res, next) => {
 });
 
 module.exports.store = tryCatchWrapper(async (req, res, next) => {
-  const job = await Job.create({
+  await Job.create({
     company: req.body.company,
     position: req.body.position,
     user: req.user.userId
   });
 
-  res.status(StatusCodes.CREATED).json({
-    success: true,
-    job
-  });
+  res.status(StatusCodes.CREATED).json({ success: true });
 });
 
 module.exports.update = tryCatchWrapper(async (req, res, next) => {

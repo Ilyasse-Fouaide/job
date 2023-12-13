@@ -4,11 +4,11 @@ const job = require("../controllers/job.controller");
 const authorize = require("../middlewares/authorize");
 
 router.route("/")
-  .get(job.index)
+  .get(authorize, job.index)
   .post(authorize, job.store);
 
 router.route("/:id")
-  .get(job.show)
+  .get(authorize, job.show)
   .patch(authorize, job.update)
   .delete(authorize, job.destroy);
 
