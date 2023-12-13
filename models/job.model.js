@@ -16,9 +16,10 @@ const jobSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Types.ObjectId,
-    ref: "users"
+    ref: "users",
+    required: true
   }
-});
+}, { timestamps: true });
 
 const Job = mongoose.model("jobs", jobSchema);
 module.exports = Job
