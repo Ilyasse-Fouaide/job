@@ -15,6 +15,10 @@ const badRequestError = (message) => {
   return new CustomError(message, StatusCodes.BAD_REQUEST);
 }
 
+const unauthorizedError = (message) => {
+  return new CustomError(message, StatusCodes.UNAUTHORIZED);
+}
+
 const notFoundError = (message) => {
   return new CustomError(message, StatusCodes.NOT_FOUND);
 }
@@ -22,5 +26,6 @@ const notFoundError = (message) => {
 module.exports = {
   internalServerError,
   badRequestError,
+  unauthorizedError,
   notFoundError
 }
