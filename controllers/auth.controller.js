@@ -38,7 +38,6 @@ module.exports.login = tryCatchWrapper(async (req, res, next) => {
 
   res.status(StatusCodes.CREATED).json({
     success: true,
-    user
-    // token: user.generateToken()
+    token: user.generateToken()
   });
 });
