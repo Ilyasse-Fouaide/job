@@ -71,5 +71,5 @@ module.exports.destroy = tryCatchWrapper(async (req, res, next) => {
     return next(notFoundError("Job not found!."))
   }
 
-  res.status(StatusCodes.OK).json({ message: "destroy" });
+  res.status(StatusCodes.OK).json({ success: true });
 });
