@@ -5,6 +5,12 @@ const jobRouter = require("./routes/job.router");
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 const connect = require("./db/connect");
+// security packages
+const cors = require("cors");
+const xss = require("xss-clean");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+
 
 const app = express();
 
