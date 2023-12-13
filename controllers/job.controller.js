@@ -8,7 +8,7 @@ module.exports.index = tryCatchWrapper(async (req, res, next) => {
     .sort("createdAt")
     .select("-__v")
 
-  res.status(200).json({
+  res.status(StatusCodes.OK).json({
     success: true,
     jobs
   });
