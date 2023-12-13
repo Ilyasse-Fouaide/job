@@ -15,7 +15,15 @@ module.exports.index = tryCatchWrapper(async (req, res, next) => {
 });
 
 module.exports.show = tryCatchWrapper(async (req, res, next) => {
-  res.status(200).json({ message: "show" });
+  const { id: jobId } = req.params;
+  const userId = req.user.userId;
+
+  const job = await Job.findOne({ _id: jobId, user: userId });
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    job
+  });
 });
 
 module.exports.store = tryCatchWrapper(async (req, res, next) => {
