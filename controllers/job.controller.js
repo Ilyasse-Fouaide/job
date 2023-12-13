@@ -57,7 +57,9 @@ module.exports.update = tryCatchWrapper(async (req, res, next) => {
     return next(notFoundError("Job not found!."))
   }
 
-  res.status(StatusCodes.OK).json({ newJob });
+  res.status(StatusCodes.OK).json({
+    success: true
+  });
 });
 
 module.exports.destroy = tryCatchWrapper(async (req, res, next) => {
