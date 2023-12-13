@@ -18,5 +18,11 @@ module.exports.register = tryCatchWrapper(async (req, res, next) => {
 });
 
 module.exports.login = tryCatchWrapper(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(badRequestError("email or password not provided!."))
+  }
+
   res.status(StatusCodes.CREATED).json({ message: "to login endpoint" });
 });
