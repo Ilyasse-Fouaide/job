@@ -14,8 +14,10 @@ module.exports = (req, res, next) => {
       return next(unauthorizedError(error))
     }
 
-    req.userId = decoded.userId
-    req.username = decoded.username
+    req.user = {
+      userId: decoded.userId,
+      username: decoded.username
+    }
 
     next();
   });
