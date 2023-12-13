@@ -43,7 +43,17 @@ module.exports.store = tryCatchWrapper(async (req, res, next) => {
 });
 
 module.exports.update = tryCatchWrapper(async (req, res, next) => {
-  res.status(200).json({ message: "update" });
+  const { company, position, status } = req.body;
+  const { id: jobId } = req.params;
+  const { userId } = req.user;
+
+  const newJob = await Job.findOneAndUpdate(
+    { _id: jobId, user: userId },
+    { company, position, status },
+    { new: true }
+  )
+
+  res.status(StatusCodes.OK).json({ newJob });
 });
 
 module.exports.destroy = tryCatchWrapper(async (req, res, next) => {
